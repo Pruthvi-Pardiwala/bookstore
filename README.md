@@ -156,10 +156,14 @@ npm run dev
 
 > Add screenshots of your running application here after deployment.
 
-1. **Dashboard** — Card grid with all books, stats, search & filters
-2. **Add Book** — Two-column form with image upload zone
-3. **Edit Book** — Pre-filled form with current image preview
-4. **Book Detail** — Full detail view with metadata grid
+1. **Dashboard** — Card grid with all books, stats, search & filters<img width="1900" height="1106" alt="localhost_3000_ (1)" src="https://github.com/user-attachments/assets/39a8bfaf-e8a0-46f8-b473-6d9e23ce4861" />
+
+2. **Add Book** — Two-column form with image upload zone<img width="1900" height="1296" alt="localhost_3000_books_add" src="https://github.com/user-attachments/assets/67746ac8-c850-494b-a64e-3dae26189769" />
+
+3. **Edit Book** — Pre-filled form with current image preview<img width="1900" height="1300" alt="localhost_3000_books_6a1dd3818dbcd64f01a7e3b8_edit" src="https://github.com/user-attachments/assets/3dfbac13-f95d-4802-8271-94e4dac308b4" />
+
+4. **Book Detail** — Full detail view with metadata grid<img width="1900" height="1150" alt="localhost_3000_books_6a1dd48e8dbcd64f01a7e3c3" src="https://github.com/user-attachments/assets/f4b5382b-0f54-415d-883a-f7067ce062d8" />
+
 
 ---
 
