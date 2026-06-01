@@ -1,0 +1,120 @@
+<%- include('partials/header', { title: 'Add New Book' }) %>
+
+<div class="form-page">
+  <div class="form-header">
+    <a href="/" class="back-link">← Back to Collection</a>
+    <h1 class="form-title">Add New Book</h1>
+    <p class="form-subtitle">Fill in the details below to add a book to your collection</p>
+  </div>
+
+  <% if (error) { %>
+    <div class="alert alert-error">❌ <%= error %></div>
+  <% } %>
+
+  <form action="/books" method="POST" enctype="multipart/form-data" class="book-form" novalidate>
+    <div class="form-grid">
+
+      <div class="form-section">
+        <div class="form-group">
+          <label for="title" class="form-label">Book Title <span class="required">*</span></label>
+          <input
+            type="text" id="title" name="title"
+            class="form-control"
+            placeholder="e.g. Rich Dad Poor Dad"
+            value="<%= formData.title || '' %>"
+            required maxlength="200"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="author" class="form-label">Author Name <span class="required">*</span></label>
+          <input
+            type="text" id="author" name="author"
+            class="form-control"
+            placeholder="e.g. Robert Kiyosaki"
+            value="<%= formData.author || '' %>"
+            required maxlength="100"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="category" class="form-label">Category <span class="required">*</span></label>
+          <select id="category" name="category" class="form-control" required>
+            <option value="">— Select Category —</option>
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat %>" <%= formData.category === cat ? 'selected' : '' %>><%= cat %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price" class="form-label">Price (₹) <span class="required">*</span></label>
+            <input
+              type="number" id="price" name="price"
+              class="form-control"
+              placeholder="499"
+              value="<%= formData.price || '' %>"
+              min="0" step="0.01" required
+            />
+          </div>
+          <div class="form-group">
+            <label for="quantity" class="form-label">Quantity <span class="required">*</span></label>
+            <input
+              type="number" id="quantity" name="quantity"
+              class="form-control"
+              placeholder="10"
+              value="<%= formData.quantity || '' %>"
+              min="0" required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            id="description" name="description"
+            class="form-control textarea"
+            placeholder="Brief description of the book..."
+            maxlength="1000"
+            rows="4"
+          ><%= formData.description || '' %></textarea>
+          <span class="char-count"><span id="descCount">0</span>/1000</span>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">Book Cover Image</label>
+          <div class="image-upload-zone" id="uploadZone">
+            <input type="file" id="image" name="image" accept="image/*" class="file-input" />
+            <div class="upload-preview" id="uploadPreview">
+              <div class="upload-placeholder">
+                <span class="upload-icon">🖼️</span>
+                <p class="upload-text">Click or drag to upload cover image</p>
+                <p class="upload-hint">JPEG, PNG, GIF, WEBP — Max 5MB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-tips">
+          <h3 class="tips-title">💡 Tips</h3>
+          <ul class="tips-list">
+            <li>Use a high-quality book cover image</li>
+            <li>Recommended size: 400×600 pixels</li>
+            <li>All fields marked with <span class="required">*</span> are required</li>
+            <li>Price should be in Indian Rupees (₹)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <a href="/" class="btn btn-ghost">Cancel</a>
+      <button type="submit" class="btn btn-primary btn-lg">📚 Add Book to Collection</button>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

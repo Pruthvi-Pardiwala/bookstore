@@ -1,0 +1,23 @@
+{
+  "name": "bookstore-management-system",
+  "version": "1.0.0",
+  "description": "A full-featured Book Store Management System using Node.js, Express, MongoDB, EJS, and Multer",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1",
+    "multer": "^1.4.5-lts.1",
+    "method-override": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "keywords": ["bookstore", "express", "mongodb", "ejs", "multer", "crud"],
+  "author": "Book Store Management System",
+  "license": "MIT"
+}

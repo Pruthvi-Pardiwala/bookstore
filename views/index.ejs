@@ -1,0 +1,106 @@
+<%- include('partials/header', { title: 'Book Collection' }) %>
+
+<div class="page-hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Book Collection</h1>
+    <p class="hero-sub">Manage your entire library in one place</p>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-card">
+      <span class="stat-num"><%= totalBooks %></span>
+      <span class="stat-label">Total Books</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">₹<%= totalValue.toLocaleString('en-IN') %></span>
+      <span class="stat-label">Inventory Value</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num"><%= categories.length %></span>
+      <span class="stat-label">Categories</span>
+    </div>
+  </div>
+</div>
+
+<% if (typeof success !== 'undefined' && success) { %>
+  <div class="alert alert-success" id="flashAlert">✅ <%= success %></div>
+<% } %>
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error" id="flashAlert">❌ <%= error %></div>
+<% } %>
+
+<div class="filters-bar">
+  <form action="/" method="GET" class="filters-form">
+    <input
+      type="text"
+      name="search"
+      placeholder="🔍 Search by title or author..."
+      value="<%= search %>"
+      class="filter-input"
+    />
+    <select name="category" class="filter-select">
+      <option value="All" <%= selectedCategory === 'All' ? 'selected' : '' %>>All Categories</option>
+      <% categories.forEach(cat => { %>
+        <option value="<%= cat %>" <%= selectedCategory === cat ? 'selected' : '' %>><%= cat %></option>
+      <% }) %>
+    </select>
+    <select name="sort" class="filter-select">
+      <option value="newest" <%= sort === 'newest' ? 'selected' : '' %>>Newest First</option>
+      <option value="title" <%= sort === 'title' ? 'selected' : '' %>>A–Z Title</option>
+      <option value="price_asc" <%= sort === 'price_asc' ? 'selected' : '' %>>Price: Low→High</option>
+      <option value="price_desc" <%= sort === 'price_desc' ? 'selected' : '' %>>Price: High→Low</option>
+    </select>
+    <button type="submit" class="btn btn-outline">Filter</button>
+    <% if (search || selectedCategory !== 'All') { %>
+      <a href="/" class="btn btn-ghost">Clear</a>
+    <% } %>
+  </form>
+</div>
+
+<% if (books.length === 0) { %>
+  <div class="empty-state">
+    <div class="empty-icon">📖</div>
+    <h2>No books found</h2>
+    <p>Try adjusting your filters or add a new book to get started.</p>
+    <a href="/books/add" class="btn btn-primary">+ Add First Book</a>
+  </div>
+<% } else { %>
+  <div class="books-grid">
+    <% books.forEach(book => { %>
+      <div class="book-card">
+        <a href="/books/<%= book._id %>" class="book-cover-link">
+          <div class="book-cover">
+            <% if (book.image) { %>
+              <img src="<%= book.image %>" alt="<%= book.title %>" loading="lazy" />
+            <% } else { %>
+              <div class="cover-placeholder">
+                <span class="cover-emoji">📗</span>
+                <span class="cover-initials"><%= book.title.charAt(0) %></span>
+              </div>
+            <% } %>
+            <div class="book-overlay">
+              <span class="overlay-label"><%= book.category %></span>
+            </div>
+          </div>
+        </a>
+        <div class="book-info">
+          <a href="/books/<%= book._id %>" class="book-title"><%= book.title %></a>
+          <p class="book-author">by <%= book.author %></p>
+          <div class="book-meta">
+            <span class="book-price">₹<%= book.price.toLocaleString('en-IN') %></span>
+            <span class="book-qty <%= book.quantity === 0 ? 'out-of-stock' : '' %>">
+              <%= book.quantity === 0 ? 'Out of Stock' : `${book.quantity} in stock` %>
+            </span>
+          </div>
+          <div class="book-actions">
+            <a href="/books/<%= book._id %>/edit" class="btn btn-sm btn-outline">✏️ Edit</a>
+            <form action="/books/<%= book._id %>?_method=DELETE" method="POST" class="inline-form" onsubmit="return confirmDelete('<%= book.title %>')">
+              <button type="submit" class="btn btn-sm btn-danger">🗑 Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

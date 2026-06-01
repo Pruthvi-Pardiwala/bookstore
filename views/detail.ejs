@@ -1,0 +1,80 @@
+<%- include('partials/header', { title: book.title }) %>
+
+<div class="detail-page">
+  <div class="detail-nav">
+    <a href="/" class="back-link">← Back to Collection</a>
+    <div class="detail-actions">
+      <a href="/books/<%= book._id %>/edit" class="btn btn-outline">✏️ Edit Book</a>
+      <form action="/books/<%= book._id %>?_method=DELETE" method="POST" class="inline-form" onsubmit="return confirmDelete('<%= book.title %>')">
+        <button type="submit" class="btn btn-danger">🗑 Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-cover">
+      <% if (book.image) { %>
+        <img src="<%= book.image %>" alt="<%= book.title %>" class="detail-img" />
+      <% } else { %>
+        <div class="detail-cover-placeholder">
+          <span>📗</span>
+          <span><%= book.title.charAt(0) %></span>
+        </div>
+      <% } %>
+      <div class="detail-badge <%= book.quantity === 0 ? 'badge-danger' : 'badge-success' %>">
+        <%= book.quantity === 0 ? '⚠️ Out of Stock' : `✅ ${book.quantity} in Stock` %>
+      </div>
+    </div>
+
+    <div class="detail-info">
+      <span class="detail-category"><%= book.category %></span>
+      <h1 class="detail-title"><%= book.title %></h1>
+      <p class="detail-author">by <strong><%= book.author %></strong></p>
+
+      <div class="detail-price-row">
+        <span class="detail-price">₹<%= book.price.toLocaleString('en-IN') %></span>
+        <span class="detail-inventory">Inventory value: ₹<%= (book.price * book.quantity).toLocaleString('en-IN') %></span>
+      </div>
+
+      <% if (book.description) { %>
+        <div class="detail-description">
+          <h3>About this book</h3>
+          <p><%= book.description %></p>
+        </div>
+      <% } %>
+
+      <div class="detail-meta-grid">
+        <div class="meta-item">
+          <span class="meta-icon">📅</span>
+          <div>
+            <span class="meta-label">Date Added</span>
+            <span class="meta-value"><%= book.createdAt.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">🔄</span>
+          <div>
+            <span class="meta-label">Last Updated</span>
+            <span class="meta-value"><%= book.updatedAt.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) %></span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">🏷️</span>
+          <div>
+            <span class="meta-label">Category</span>
+            <span class="meta-value"><%= book.category %></span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">📦</span>
+          <div>
+            <span class="meta-label">Stock Status</span>
+            <span class="meta-value"><%= book.quantity > 0 ? `${book.quantity} copies available` : 'Unavailable' %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
